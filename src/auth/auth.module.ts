@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthController } from './auth.controller';
@@ -13,8 +15,14 @@ import { jwtStrategy } from './strategy/jwt-strategy';
     JwtModule.register({
       secret: 'OURSECRET',
     }),
+    // PassportModule.register({ defaultStrategy: 'bearer' }),
+    MulterModule.register({
+      dest: './upload',
+    }),
+ 
   ],
   controllers: [AuthController],
-  providers: [AuthService, jwtStrategy],
+  providers: [jwtStrategy, AuthService],
+  exports:[AuthService]
 })
 export class AuthModule {}
