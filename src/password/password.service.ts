@@ -1,9 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/auth.service';
-import { ForgetPasswordDto } from 'src/auth/dto/forgetPassword.dto';
 import { Repository } from 'typeorm';
 import { Password } from './passwordEntity/passEntity';
 import * as bcrypt from 'bcrypt';
@@ -17,7 +15,7 @@ export class PasswordService {
     private authService: AuthService,
   ) {}
 
-  async getUserByToken(token: string) {
+  async getUserByToken(token) {
     return await this.passwordRepository.findOneBy({ token });
   }
 
@@ -49,9 +47,6 @@ export class PasswordService {
       message: 'Please check your email to reset password',
     };
   }
-
-  // User Update Profile
-
 
   // Reset the password
   async resetPassword( password) {
